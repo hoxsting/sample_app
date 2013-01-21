@@ -5,6 +5,7 @@ gem 'sqlite3'
 gem 'gravatar_image_tag', '1.0.0.pre2'
 gem 'jquery-rails'
 gem "will_paginate", :git => "https://github.com/p7r/will_paginate.git", :branch => "rails3"
+gem 'ZenTest'
 
 group :development do
   gem 'rspec-rails', '2.5.0'
