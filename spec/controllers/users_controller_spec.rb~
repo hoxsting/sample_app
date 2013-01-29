@@ -59,12 +59,12 @@ describe UsersController do
 
     it "devrait avoir un champ mot de passe" do
       get :new
-      response.should have_selector("input[name='user[password]'][type='text']")
+      response.should have_selector("input[name='user[password]'][type='password']")
     end
 
     it "devrait avoir un champ confirmation du mot de passe" do
       get :new
-      response.should have_selector("input[name='user[password_confirmation]'][type='text']")
+      response.should have_selector("input[name='user[password_confirmation]'][type='password']")
     end
   end
 
@@ -91,6 +91,12 @@ describe UsersController do
       it "devrait avoir un message de bienvenue" do
         post :create, :user => @attr
         flash[:success].should =~ /Bienvenue /i
+      end
+
+      
+      it "devrait identifier l'utilisateur" do
+        post :create, :user => @attr
+        controller.should be_signed_in
       end
     end
 

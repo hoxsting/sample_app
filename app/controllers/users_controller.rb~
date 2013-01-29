@@ -2,7 +2,6 @@ class UsersController < ApplicationController
   def new
     @titre = "Inscription"
     @user = User.new
-    @user.password = "test"
   end
 
   def show
@@ -13,10 +12,11 @@ class UsersController < ApplicationController
  def create
     @user = User.new(params[:user])
     if @user.save
-      flash[:success] = "Bienvenue dans l'Application."
+      sign_in @user
+      flash[:success] = "Bienvenue dans l'Application Exemple !"
       redirect_to @user
     else
-      @titre = "Inscription"
+      @titre = "Sign up"
       render 'new'
     end
   end
