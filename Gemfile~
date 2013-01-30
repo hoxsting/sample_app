@@ -18,5 +18,14 @@ group :test do
   gem 'webrat', '0.7.1'
   gem 'spork', '0.8.4'
   gem 'factory_girl_rails', '1.0'
-  gem 'factory_girl_rails', '1.0'
 end
+
+# group :development, :test do
+#   gem 'sqlite3'
+# end
+#
+# group :assets do
+#   gem 'uglifier'
+# end
+
+# Remplacer update par htmldans create.js.erb et destroy

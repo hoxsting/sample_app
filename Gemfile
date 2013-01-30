@@ -19,3 +19,13 @@ group :test do
   gem 'spork', '0.8.4'
   gem 'factory_girl_rails', '1.0'
 end
+
+# group :development, :test do
+#   gem 'sqlite3'
+# end
+#
+# group :assets do
+#   gem 'uglifier'
+# end
+
+# Remplacer update par html dans create.js.erb et destroy
