@@ -160,4 +160,56 @@ describe User do
       @user.should be_admin
     end
   end
+
+    describe "les associations au micro-message" do
+
+    before(:each) do
+      @user = User.create(@attr)
+    end
+
+    it "devrait avoir un attribut 'microposts'" do
+      @user.should respond_to(:microposts)
+    end
+  end
+
+  describe "micropost associations" do
+
+    before(:each) do
+      @user = User.create(@attr)
+      @mp1 = Factory(:micropost, :user => @user, :created_at => 1.day.ago)
+      @mp2 = Factory(:micropost, :user => @user, :created_at => 1.hour.ago)
+    end
+
+    it "devrait avoir un attribut `microposts`" do
+      @user.should respond_to(:microposts)
+    end
+
+    it "devrait avoir les bons micro-messags dans le bon ordre" do
+      @user.microposts.should == [@mp2, @mp1]
+    end
+
+    it "devrait detruire les micro-messages associes" do
+      @user.destroy
+      [@mp1, @mp2].each do |micropost|
+        Micropost.find_by_id(micropost.id).should be_nil
+      end
+    end
+    describe "Etat de l'alimentation" do
+
+      it "devrait avoir une methode `feed`" do
+        @user.should respond_to(:feed)
+      end
+
+      it "devrait inclure les micro-messages de l'utilisateur" do
+        @user.feed.include?(@mp1).should be_true
+        @user.feed.include?(@mp2).should be_true
+      end
+
+      it "ne devrait pas inclure les micro-messages d'un autre utilisateur" do
+        mp3 = Factory(:micropost,
+                      :user => Factory(:user, :email => Factory.next(:email)))
+        @user.feed.include?(mp3).should be_false
+      end
+    end
+  end
 end

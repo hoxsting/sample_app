@@ -16,6 +16,7 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
+    @microposts = @user.microposts.paginate(:page => params[:page])
     @titre = @user.nom
   end
 
@@ -49,24 +50,20 @@ class UsersController < ApplicationController
 
   def destroy
     user = User.find(params[:id])
-#    if(user != current_user)
+    if(user != current_user)
       user.destroy
       flash[:success] = "Utilisateur supprime."
       redirect_to users_path
- #   else
- #     flash[:error] = "Vous n'avez pas l'autorisation de vous supprimer"
-  #    redirect_to users_path
-   # end
+    else
+      flash[:error] = "Vous n'avez pas l'autorisation de vous supprimer"
+      redirect_to users_path
+    end
   end
 
   private
 
     def non_autenticate
       deny_access_connecte unless not signed_in?
-    end
-
-    def authenticate
-      deny_access unless signed_in?
     end
 
     def correct_user
